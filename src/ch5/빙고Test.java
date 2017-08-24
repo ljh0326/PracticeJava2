@@ -22,7 +22,7 @@ public class ºù°íTest {
 
 	@Test
 	public void test() {
-		int bingoCnt = 
+		
 	}
 
 }

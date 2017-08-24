@@ -144,26 +144,16 @@ class Card implements Comparable {
 		// isStrike = isStrke(4);
 		// }
 
-		if ((strike && flush)) {
-			return "strightflush";
-		} else if (four) {
-			return "four card";
-		} else if (pair == 1 && three) {
-			return "fullhouse";
-		} else if (flush) {
-			return "flush";
-		} else if (strike) {
-			return "straght";
-		} else if (three) {
-			return "three card";
-		} else if (pair == 2) {
-			return "two pair";
-		} else if (pair == 1) {
-			return "one pair";
-		} else {
-			return "noRank";
-		}
-
+		if ((strike && flush))       return "strightflush"; 
+		else if (four)               return "four card";
+		else if (pair == 1 && three) return "fullhouse";
+		else if (flush)              return "flush";
+		else if (strike)             return "straght";
+		else if (three)              return "three card";
+		else if (pair == 2)          return "two pair";
+		else if (pair == 1)          return "one pair";
+		else                         return "noRank";
+		
 	}
 
 	// // 스트라이트 예외 처리
@@ -319,25 +309,16 @@ public class PokerGame {
 	int pokerRank(Card[] cArr) {
 		int num = 0;
 
-		if (deck.check(cArr).equals("strightflush"))
-			num = 8;
-		else if (deck.check(cArr).equals("four card"))
-			num = 7;
-		else if (deck.check(cArr).equals("fullhouse"))
-			num = 6;
-		else if (deck.check(cArr).equals("flush"))
-			num = 5;
-		else if (deck.check(cArr).equals("straght"))
-			num = 4;
-		else if (deck.check(cArr).equals("three card"))
-			num = 3;
-		else if (deck.check(cArr).equals("two pair"))
-			num = 2;
-		else if (deck.check(cArr).equals("one pair"))
-			num = 1;
-		else if (deck.check(cArr).equals("noRank"))
-			num = 0;
-
+		if      (deck.check(cArr).equals("strightflush")) num = 8;
+		else if (deck.check(cArr).equals("four card"))    num = 7;
+		else if (deck.check(cArr).equals("fullhouse"))    num = 6;
+		else if (deck.check(cArr).equals("flush"))        num = 5;
+		else if (deck.check(cArr).equals("straght"))      num = 4;
+		else if (deck.check(cArr).equals("three card"))   num = 3;
+		else if (deck.check(cArr).equals("two pair"))     num = 2;
+		else if (deck.check(cArr).equals("one pair"))     num = 1;
+		else if (deck.check(cArr).equals("noRank"))       num = 0;
+		
 		return num;
 	}
 
