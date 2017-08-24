@@ -3,7 +3,7 @@ package PokerGame;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Scanner;
-
+//손볼 곳 상속대신 포함관계 그리고 중복안나오게 자료구조 이용해볼까?
 class Deck extends Card {
 
 	Card[][] cardArr = new Card[Card.KIND_MAX][Card.NUM_MAX];
@@ -75,8 +75,6 @@ class Card implements Comparable {
 		String numbers = "0123456789XJQK";
 		return kinds[this.kind] + " " + numbers.charAt(this.num);
 	}
-
-	// 정렬ㅌ
 
 	// 타입체크
 	String check(Card[] cArr) {
@@ -153,7 +151,6 @@ class Card implements Comparable {
 		else if (pair == 2)          return "two pair";
 		else if (pair == 1)          return "one pair";
 		else                         return "noRank";
-		
 	}
 
 	// // 스트라이트 예외 처리
@@ -202,30 +199,32 @@ public class PokerGame {
 	int flag;
 	int money = 0;
 	Scanner sc = new Scanner(System.in);
-
 	Deck deck = new Deck();
-
 	Diller diller = new Diller();
 	Player player1 = new Player();
 	Player player2 = new Player("컴퓨터", 5000);
-
 	Card[] cArr = new Card[5];
 	Card[] cArr2 = new Card[5];
 
 	PokerGame() {
-
+		
 	}
 
 	void playGame() {
+		
 		System.out.println("플레이 포커 !!!!!!!!");
 		System.out.println();
+		//1. 플레이어를 세팅한다.
 		PlayerSet();
 
 		while (true) {
-			getNewCard();
-			dillerSet();
-			setCardArr();
-
+			//2. 게임 초기화
+			initGame();
+		
+			//3. 게임 진행
+				//3.1 딜러의 패를공개
+				//3.2 플레이어1의 패를 공개
+				//3.3 플레이어1의 배팅 여부를 기다린다.
 			System.out.println();
 			System.out.println("딜러 패 공개");
 			Arrays.sort(diller.cArr);
@@ -239,17 +238,21 @@ public class PokerGame {
 			System.out.println("배팅 : 1, Die : 2");
 			flag = sc.nextInt();
 
+			//4.1 플레이어가 배팅을 선택하면 배팅시작
+			//4.1.1 플레이어와 컴퓨터의 결과 출력
+			//4.1.2 플레이어와 컴퓨터 중 누가이겼는지 판별 후 결과 출력
 			if (flag == 1) {
 				batting();
-				System.out.println();
-				System.out.println(player1.name + " " + deck.check(cArr));
-				System.out.println(player2.name + " " + deck.check(cArr2));
+				printResult();
 				whoWin();
-
+			//4.2 배팅을 안하면 그냥 죽음
 			} else if (flag == 2) {
 				die();
 			}
-
+			
+			//5. 게임오버 체크 
+			//5.1 플레이어가 돈이 다 떨어지면 짐 파산
+			//5.2 컴퓨터가 돈이 다 떨어지면 이김
 			if (player1.money <= 0) {
 				System.out.println();
 				System.out.println(player1.bankrub() + "GAMEOVER");
@@ -262,6 +265,21 @@ public class PokerGame {
 			}
 		}
 
+	}
+
+	private void printResult() {
+		System.out.println();
+		System.out.println(player1.name + " " + deck.check(cArr));
+		System.out.println(player2.name + " " + deck.check(cArr2));
+	}
+
+	private void initGame() {
+		//2.1 플레이어와 컴퓨터에게 새로운 카드를 주고
+		//2.2 딜러에게 새로운 카드를 주고
+		//2.3 딜러와 플레이어의 카드를 조합한다.
+		getNewCard();
+		dillerSet();
+		setCardArr();
 	}
 
 	void getNewCard() {
